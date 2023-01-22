@@ -2,6 +2,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "@/slices/basketSlice";
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
@@ -15,6 +17,7 @@ export default function Product({
   image,
 }) {
   const [rating, setRating] = useState(1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const star = Math.floor(
@@ -24,6 +27,21 @@ export default function Product({
   }, [rating]);
 
   const [hasPrime] = useState(true);
+  const addItemToBasket = () => {
+    const product = {
+      id,
+      title,
+      price,
+      rating,
+      description,
+      category,
+      image,
+      hasPrime,
+    };
+
+    // Sending the product as an action to the REDUX store.
+    dispatch(addToBasket(product));
+  };
 
   return (
     <div className="relative flex flex-col m-5 bg-white z-30 p-10">
@@ -67,7 +85,9 @@ export default function Product({
         </div>
       )}
 
-      <button className="mt-auto button">Add to Basket</button>
+      <button onClick={addItemToBasket} className="mt-auto button">
+        Add to Basket
+      </button>
     </div>
   );
 }
