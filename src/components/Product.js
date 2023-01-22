@@ -67,7 +67,7 @@ export default function Product({
           ))}
       </div>
 
-      <p className="text-xs my-2">{description}</p>
+      <p className="text-xs my-2 line-clamp-3">{description}</p>
 
       <div className="mb-5 font-semibold">
         <p>{price} €</p>
